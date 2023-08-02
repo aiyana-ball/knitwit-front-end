@@ -1,6 +1,6 @@
-import { collection, getFirestore, doc, getDoc, getDocs } from 'firebase/firestore';
+import { collection, getFirestore, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, signInWithPopup  } from 'firebase/auth';
-import { initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app"; 
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -39,14 +39,22 @@ export const getAccountData = () => {
 
 export const signInWithGoogle = () => {
     
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
+    return signInWithPopup(auth, provider)
+      .then(async (result) => {
+        // This gives a Google Access Token. Used it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
         console.log(user);
+        // Create a user document in Firestore
+        const userDocRef = doc(db, 'account', user.uid)
+        await setDoc(userDocRef, {
+          name: user.displayName,
+          email: user.email,
+          // additional user fields (photo?)
+        }, { merge: true }); // merge to avoid overwriting existing data
+        return user;
         // ...
       }).catch((error) => {
         // Handle Errors here.
