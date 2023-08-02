@@ -1,13 +1,9 @@
-// Import the functions you need from the SDKs you need
+import { collection, getFirestore, doc, getDoc, getDocs } from 'firebase/firestore';
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyD2c23UM96pJe07kAiavjfPWDBxVLrrZ3U",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "knitwit-5feb6.firebaseapp.com",
   projectId: "knitwit-5feb6",
   storageBucket: "knitwit-5feb6.appspot.com",
@@ -18,4 +14,25 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+export const db = getFirestore(app);
+
+export const auth = getAuth();
+export const provider = new GoogleAuthProvider();
+provider.setCustomParameters({ prompt: 'select_account' });
+
+export const getAccountData = () => {
+  console.log("getting account data")
+  const docRef = doc(db, "account", "Pm7D9gMXPK1QAr0Wyp8m");
+  getDoc(docRef)
+      .then((doc) => {
+          if (doc.exists()) {
+              console.log("Document data:", doc.data());
+          } else {
+              // doc.data() will be undefined in this case
+              console.log("No such document!");
+          }
+      })
+      .catch((error) => {
+          console.log("Error getting document:", error);
+      });
+}

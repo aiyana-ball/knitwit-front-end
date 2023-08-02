@@ -1,7 +1,9 @@
 import './App.css';
 import './components/SearchBar.css';
-
+import db from './firebase.js';
+import { getAccountData } from './firebase.js';
 function App() {
+  getAccountData();
   return (
     <div className="container">
       <div className="menu">Menu</div>
