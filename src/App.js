@@ -1,13 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import './components/SearchBar.css';
 
 function App() {
   return (
-    <div class="container">
-      <div class="menu">Menu</div>
-      <div class="header">Header</div>
-      <div class="main">Main Content</div>
-      <div class="footer">Footer</div>
+    <div className="container">
+      <div className="menu">Menu</div>
+      <div className="header">
+        <div id="cover">
+          <form method="get" action="">
+            <div className="tb">
+              <div className="td"><input type="text" placeholder="Search" required/></div>
+              <div className="td" id="s-cover">
+                <button type="submit">
+                  <div id="s-circle"></div>
+                  <span></span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div className="main">Main Content</div>
+      <div className="footer">Footer</div>
     </div>
   );
 }
