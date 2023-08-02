@@ -1,12 +1,25 @@
 import './App.css';
 import './components/SearchBar.css';
+import './components/MenuButtons.css';
+import UserContext from './UserContext';
 import db from './firebase.js';
 import { getAccountData } from './firebase.js';
+import { getAuth, GoogleAuthProvider, signInWithGoogle} from './firebase.js';
+import React, { useState } from 'react';
+
 function App() {
+
   getAccountData();
   return (
     <div className="container">
-      <div className="menu">Menu</div>
+      <div className="menu">
+        <div className='logo-placeholder'></div>
+        <button className="sidebar-button">Home</button>
+        <button className="sidebar-button">Profile</button>
+        <button className="sidebar-button">Patterns</button>
+        <button className="sidebar-button">Yarn</button>
+      </div>
+      <button onClick={() => signInWithGoogle()}>Sign in with Google</button>
       <div className="header">
         <div id="cover">
           <form method="get" action="">
