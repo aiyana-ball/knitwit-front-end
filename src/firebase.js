@@ -1,5 +1,5 @@
 import { collection, getFirestore, doc, getDoc, getDocs } from 'firebase/firestore';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup  } from 'firebase/auth';
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -24,15 +24,38 @@ export const getAccountData = () => {
   console.log("getting account data")
   const docRef = doc(db, "account", "Pm7D9gMXPK1QAr0Wyp8m");
   getDoc(docRef)
-      .then((doc) => {
-          if (doc.exists()) {
-              console.log("Document data:", doc.data());
-          } else {
-              // doc.data() will be undefined in this case
-              console.log("No such document!");
-          }
-      })
-      .catch((error) => {
-          console.log("Error getting document:", error);
-      });
+    .then((doc) => {
+    if (doc.exists()) {
+      console.log("Document data:", doc.data());
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+})
+.catch((error) => {
+    console.log("Error getting document:", error);
+});
 }
+
+export const signInWithGoogle = () => {
+    
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        console.log(user);
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  };
