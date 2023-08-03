@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { signInWithGoogle } from '../firebase'; // import signInWithGoogle from firebase.js
 import UserContext from '../UserContext';
 
 function Profile({ onSignIn}) {
