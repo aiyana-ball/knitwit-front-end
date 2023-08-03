@@ -2,20 +2,28 @@ import './App.css';
 import './components/SearchBar.css';
 import './components/MenuButtons.css';
 import UserContext from './UserContext';
+import { makeRavelryRequest } from './ravelry';
 import { db, getAccountData, getAuth, GoogleAuthProvider, signInWithGoogle} from './firebase.js';
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useRoutes, Navigate } from 'react-router-dom';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import Patterns from './components/Patterns';
 import YarnPage from './components/Yarn';
-
+import SearchBar from './components/SearchBar';
 function App() {
+  
   const [user, setUser] = useState(null); //If the user data updates, re-render
   //this line adds the user photo {user && <img src={user.photoURL} alt="User" />}  (to be used later)
   const handleSignIn = () => {
     signInWithGoogle().then(user => setUser(user));
   };
+
+  // makeRavelryRequest('yarns/search.json')
+  // .then(data => console.log(data))
+  // .catch(error => console.error('Error:', error));
+
+
   return (
     <UserContext.Provider value={user}> {/*Give every component access to the user data context provider*/}
       <Router>
@@ -31,21 +39,12 @@ function App() {
           </div>
           <div className="header">
             <div id="cover">
-              <form method="get" action="">
-                <div className="tb">
-                  <div className="td"><input type="text" placeholder="Search" required/></div>
-                  <div className="td" id="s-cover">
-                    <button type="submit">
-                      <div id="s-circle"></div>
-                      <span></span>
-                    </button>
-                  </div>
-                </div>
-              </form>
+              <SearchBar />
             </div>
           </div>
           <div className="main">
             <Routes>
+              <Route path="/" element={<Navigate to="/home" />} />
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<Profile onSignIn={handleSignIn} />} />
               <Route path="/patterns" element={<Patterns />} />
@@ -58,6 +57,6 @@ function App() {
       </Router>
     </UserContext.Provider>
   );
-}
+  }
 
 export default App;
