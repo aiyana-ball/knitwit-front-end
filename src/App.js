@@ -2,10 +2,10 @@ import './App.css';
 import './components/SearchBar.css';
 import './components/MenuButtons.css';
 import UserContext from './UserContext';
-import { makeRavelryRequest } from './ravelry';
-import { db, getAccountData, getAuth, GoogleAuthProvider, signInWithGoogle, firebaseSignOut } from './firebase.js';
+import { signInWithGoogle, firebaseSignOut } from './firebase.js';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useRoutes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { auth } from './firebase';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import Patterns from './components/Patterns';
@@ -22,6 +22,13 @@ function App() {
   const handleSignOut = () => {
     firebaseSignOut().then(() => setUser(null));
   };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      setUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, signIn: handleSignIn, signOut: handleSignOut }}> {/*Give every component access to the user data context provider*/}
