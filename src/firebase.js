@@ -1,4 +1,4 @@
-import { collection, getFirestore, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { initializeApp } from "firebase/app"; 
 import React, { createContext, useState } from 'react';
