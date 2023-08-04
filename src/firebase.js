@@ -1,7 +1,9 @@
 import { collection, getFirestore, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
-import { getAuth, GoogleAuthProvider, signInWithPopup  } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { initializeApp } from "firebase/app"; 
+import React, { createContext, useState } from 'react';
 
+// Firebase config
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "knitwit-5feb6.firebaseapp.com",
@@ -28,7 +30,6 @@ export const getAccountData = () => {
     if (doc.exists()) {
       console.log("Document data:", doc.data());
     } else {
-      // doc.data() will be undefined in this case
       console.log("No such document!");
     }
 })
@@ -37,8 +38,8 @@ export const getAccountData = () => {
 });
 }
 
+// sign in
 export const signInWithGoogle = () => {
-    
     return signInWithPopup(auth, provider)
       .then(async (result) => {
         // This gives a Google Access Token. Used it to access the Google API.
@@ -53,17 +54,50 @@ export const signInWithGoogle = () => {
           name: user.displayName,
           email: user.email,
           // additional user fields (photo?)
-        }, { merge: true }); // merge to avoid overwriting existing data
+        }, { merge: true });
         return user;
         // ...
       }).catch((error) => {
-        // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
         const email = error.email;
-        // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
       });
   };
+
+// sign out
+export const firebaseSignOut = () => {
+  return signOut(auth)
+    .then(() => {
+      console.log('User signed out');
+      return 'signed out';
+    })
+    .catch((error) => {
+      console.log('Error signing out: ', error);
+    });
+};
+
+// user context
+export const UserContext = createContext();
+export const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  
+  const handleSignIn = () => {
+    signInWithGoogle().then((user) => {
+      setUser(user);
+    });
+  };
+
+  const handleSignOut = () => {
+    firebaseSignOut().then(() => {
+      setUser(null);
+    });
+  };
+
+  return (
+    <UserContext.Provider value = {{ user, signIn: handleSignIn, signOut: handleSignOut }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
