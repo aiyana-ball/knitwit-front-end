@@ -1,19 +1,23 @@
 import React, { useContext } from 'react';
 import UserContext from '../UserContext';
 
-function Profile({ onSignIn}) {
-  const user = useContext(UserContext);
+function Profile() {
+  const { user, signIn, signOut } = useContext(UserContext);
+
 
   return (
     <div>
       <h1>Profile Page</h1>
       {user ? (
-        <p>Welcome, {user.displayName}!</p>
+        <div>
+          <p>Welcome, {user.displayName}!</p>
+          <button onClick={signOut}>Sign out</button>
+        </div>
       ) : (
-        <button onClick={onSignIn}>Sign in with Google</button>
+        <button onClick={signIn}>Sign in with Google</button>
       )}
     </div>
   );
-}
+};
 
 export default Profile;
