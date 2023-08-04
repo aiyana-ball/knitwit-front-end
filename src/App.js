@@ -3,7 +3,7 @@ import './components/SearchBar.css';
 import './components/MenuButtons.css';
 import UserContext from './UserContext';
 import { makeRavelryRequest } from './ravelry';
-import { db, getAccountData, getAuth, GoogleAuthProvider, signInWithGoogle} from './firebase.js';
+import { db, getAccountData, getAuth, GoogleAuthProvider, signInWithGoogle, firebaseSignOut } from './firebase.js';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useRoutes, Navigate } from 'react-router-dom';
 import Home from './components/Home';
@@ -19,13 +19,12 @@ function App() {
     signInWithGoogle().then(user => setUser(user));
   };
 
-  // makeRavelryRequest('yarns/search.json')
-  // .then(data => console.log(data))
-  // .catch(error => console.error('Error:', error));
-
+  const handleSignOut = () => {
+    firebaseSignOut().then(() => setUser(null));
+  };
 
   return (
-    <UserContext.Provider value={user}> {/*Give every component access to the user data context provider*/}
+    <UserContext.Provider value={{ user, signIn: handleSignIn, signOut: handleSignOut }}> {/*Give every component access to the user data context provider*/}
       <Router>
         <div className="container">
           <div className="menu">
@@ -46,7 +45,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Navigate to="/home" />} />
               <Route path="/home" element={<Home />} />
-              <Route path="/profile" element={<Profile onSignIn={handleSignIn} />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/patterns" element={<Patterns />} />
               <Route path="/yarn" element={<YarnPage />} />
             </Routes>
