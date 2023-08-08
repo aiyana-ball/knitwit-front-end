@@ -22,7 +22,7 @@ function Patterns() {
       <div className="search-results">
         {patternData.patterns.map((result, index) => (
           <div key={index} className="search-result">
-            <img src={result.image_url} alt={result.name}/>
+            <img src={result.first_photo.small_url} alt={result.name}/>
             <h2>{result.name}</h2>
           </div>
         ))}
