@@ -1,12 +1,13 @@
 import './App.css';
 import './components/SearchBar.css';
 import './components/MenuButtons.css';
+import './components/Search.css';
 import UserContext from './UserContext';
-import { signInWithGoogle, firebaseSignOut } from './firebase.js';
+import { signInWithGoogle, firebaseSignOut } from './components/firebase.js';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
-import { auth } from './firebase';
-import Home from './components/Home';
+import { auth } from './components/firebase';
+import Search from './components/Search';
 import Profile from './components/Profile';
 import Patterns from './components/Patterns';
 import YarnPage from './components/Yarn';
@@ -38,20 +39,20 @@ function App() {
             <div className="logo-placeholder">
               <img src="/knitwit-logo.png" alt="Logo" />
             </div>
-            <Link to="/home"><button className="sidebar-button">Home</button></Link>
+            <Link to="/search"><button className="sidebar-button">Search</button></Link>
             <Link to="/profile"><button className="sidebar-button">Profile</button></Link>
             <Link to="/patterns"><button className="sidebar-button">Patterns</button></Link>
             <Link to="/yarn"><button className="sidebar-button">Yarn</button></Link>
           </div>
-          <div className="header">
+          {/* <div className="header">
             <div id="cover">
               <SearchBar />
             </div>
-          </div>
+          </div> */}
           <div className="main">
             <Routes>
-              <Route path="/" element={<Navigate to="/home" />} />
-              <Route path="/home" element={<Home />} />
+              <Route path="/" element={<Navigate to="/search" />} />
+              <Route path="/search" element={<Search />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/patterns" element={<Patterns />} />
               <Route path="/yarn" element={<YarnPage />} />
