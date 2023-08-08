@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllPatterns } from './ravelry';
+import './SearchResults.css';
 
 function Patterns() {
   const [patternData, setPatternData] = useState(null);
@@ -18,11 +19,11 @@ function Patterns() {
     <div>
       <h1>Patterns Page</h1>
       <p>Welcome to the patterns page!</p>
-      <div className="grid">
-        {Object.entries(patternData.patterns).map(([key, pattern]) => (
-          <div key={pattern.id} className="grid-item">
-            <h2>{pattern.name}</h2>
-            <img src={pattern.image_url} alt={pattern.name} />
+      <div className="search-results">
+        {patternData.patterns.map((result, index) => (
+          <div key={index} className="search-result">
+            <img src={result.image_url} alt={result.name}/>
+            <h2>{result.name}</h2>
           </div>
         ))}
       </div>

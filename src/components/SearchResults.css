@@ -1,0 +1,19 @@
+.search-results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  max-height: 600px;
+  overflow-y: auto;
+
+}
+
+.search-result {
+  margin: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  flex: 1 0 15%;
+}
+
+.search-result img {
+  width: 100%;
+}
