@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeRavelryRequest } from '../ravelry'; // import your API request function
+import { makeRavelryRequest } from './ravelry';
 
 function SearchBar() {
   const [query, setQuery] = useState('');
