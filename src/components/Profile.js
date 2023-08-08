@@ -3,11 +3,13 @@ import UserContext from '../UserContext';
 
 function Profile() {
   const { user, signIn, signOut } = useContext(UserContext);
+  // const photoURL = user.photoURL.replace('s96-c', 's200-c');
+  const photoURL = user ? user.photoURL.replace('s96-c', 's125-c') : null;
 
 
   return (
     <div>
-      <h1>Profile Page</h1>
+      <h1>{user && <img src={photoURL} alt="Profile" />}</h1>
       {user ? (
         <div>
           <p>Welcome, {user.displayName}!</p>

@@ -11,11 +11,9 @@ import Search from './components/Search';
 import Profile from './components/Profile';
 import Patterns from './components/Patterns';
 import YarnPage from './components/Yarn';
-import SearchBar from './components/SearchBar';
+
 function App() {
-  
-  const [user, setUser] = useState(null); //If the user data updates, re-render
-  //this line adds the user photo {user && <img src={user.photoURL} alt="User" />}  (to be used later)
+  const [user, setUser] = useState(null);
   const handleSignIn = () => {
     signInWithGoogle().then(user => setUser(user));
   };
