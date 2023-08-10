@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAllYarns } from './ravelry';
 import './SearchResults.css';
+import Favorites from './Favorites';
 
 function YarnPage() {
   const [yarns, setYarns] = useState([]);
@@ -17,10 +18,11 @@ function YarnPage() {
       <p>Welcome to the yarn page!</p>
       <div className="search-results">
         {yarns.map((yarn, index) => (
-          <div key={index} className="search-result">
-            <img src={yarn.first_photo.small_url} alt={yarn.name} />
-            <h2>{yarn.name}</h2>
-          </div>
+            <Favorites key={index} item={yarn}/>
+          // <div key={index} className="search-result">
+          //   <img src={yarn.first_photo.small_url} alt={yarn.name} />
+          //   <h2>{yarn.name}</h2>
+          // </div>
         ))}
       </div>
     </div>
