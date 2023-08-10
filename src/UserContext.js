@@ -1,5 +1,3 @@
-import React from 'react';
-
-const UserContext = React.createContext(null);
+import { UserContext } from './components/firebase';
 
 export default UserContext;
