@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { makeRavelryRequest } from './ravelry';
+import './SearchResults.css';
 
-function SearchBar() {
+function SearchBar({ onSearch }) {
   const [query, setQuery] = useState('');
 
   const handleInputChange = (event) => {
@@ -10,10 +11,20 @@ function SearchBar() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('searching yarns')
-    makeRavelryRequest(`yarns/search.json?query=${query}`)
-      .then(data => console.log(data))
-      .catch(error => console.error('Error:', error));
+    console.log('searching yarns and patterns')
+    Promise.all([
+      makeRavelryRequest(`yarns/search.json?query=${query}&page_size=200`),
+      makeRavelryRequest(`patterns/search.json?query=${query}&page_size=200`)
+    ])
+    .then(([yarnsData, patternsData]) => {
+      const data = {
+        yarns: yarnsData,
+        patterns: patternsData
+      };
+      console.log(data);
+      onSearch(data);
+    })
+    .catch(error => console.error('Error:', error));
   };
 
   return (
