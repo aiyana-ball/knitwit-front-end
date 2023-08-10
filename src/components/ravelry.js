@@ -15,7 +15,7 @@ export function makeRavelryRequest(endpoint) {
     
 export function getAllPatterns() {
   console.log('Getting all patterns')
-  const data = makeRavelryRequest(`patterns/search.json`)
+  const data = makeRavelryRequest(`patterns/search.json?&page_size=200`)
   console.log(data)
   return data
     .catch(error => console.error('Error:', error));
@@ -23,7 +23,7 @@ export function getAllPatterns() {
 
 export function getAllYarns() {
   console.log('Getting all yarns')
-  const data = makeRavelryRequest(`yarns/search.json`)
+  const data = makeRavelryRequest(`yarns/search.json?&page_size=200`)
   console.log(data)
   return data
     .catch(error => console.log.error('Error:', error));
