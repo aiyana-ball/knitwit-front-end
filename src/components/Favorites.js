@@ -9,33 +9,31 @@ function Favorites({ item }) {
   
   // console.log(user)
   const toggleFavorite = async () => {
-    console.log("toggleFavorite")
+    // console.log("toggleFavorite")
     if (user) {
       const userRef = doc(db, 'account', user.uid);
-      console.log("user exists")
+      // console.log("user exists")
       const docSnap = await getDoc(userRef);
+      const favoriteItem = { id: item.id, type: item.type }; // the item type is in the 'type' field of the 'item' object
+
       if (docSnap.exists()) {
-        console.log("docSnap exists")
+        // console.log("docSnap exists")
         const userData = docSnap.data();
-        if (userData.favorites && userData.favorites.includes(item.id)) {
-          //console.log(userData.Favorites)
-          console.log("favorites includes item")
-          //console.log(item)
-          //console.log(item.id)
+        if (userData.favorites && userData.favorites.some(favorite => favorite.id === item.id)) {
+          // console.log("favorites includes item")
           await updateDoc(userRef, {
-            favorites: arrayRemove(item.id)
+            favorites: arrayRemove(favoriteItem)
           });
         } else {
-          console.log("favorites does not include item")
+          // console.log("favorites does not include item")
           await updateDoc(userRef, {
-            favorites: arrayUnion(item.id)
+            favorites: arrayUnion(favoriteItem)
           }).catch(error => console.error('Error updating document:', error));
         }
-
       } else {
-        console.log("favorites field doesn't exist")
+        // console.log("favorites field doesn't exist")
         await setDoc(userRef, {
-          favorites: [item.id]
+          favorites: [favoriteItem]
         }, { merge: true });
       }
     }
