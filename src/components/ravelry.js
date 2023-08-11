@@ -9,22 +9,36 @@ export function makeRavelryRequest(endpoint) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     return response.json();
+    })
+    .then(data => {
+      // console.log(data);
+      return data;
     });
   }
 
     
-export function getAllPatterns() {
-  console.log('Getting all patterns')
-  const data = makeRavelryRequest(`patterns/search.json?&page_size=200`)
-  console.log(data)
-  return data
-    .catch(error => console.error('Error:', error));
+  export function getAllPatterns() {
+    console.log('Getting all patterns')
+    return makeRavelryRequest(`patterns/search.json?&page_size=50`)
+      .then(data => {
+        data.patterns.forEach(pattern => {
+          pattern.type = 'pattern';
+        });
+        // console.log(data);
+        return data;
+      })
+      .catch(error => console.error('Error:', error));
+  }
+  
+  export function getAllYarns() {
+    console.log('Getting all yarns')
+    return makeRavelryRequest(`yarns/search.json?&page_size=50`)
+      .then(data => {
+        data.yarns.forEach(yarn => {
+          yarn.type = 'yarn';
+        });
+        // console.log(data);
+        return data;
+      })
+      .catch(error => console.error('Error:', error));
   };
-
-export function getAllYarns() {
-  console.log('Getting all yarns')
-  const data = makeRavelryRequest(`yarns/search.json?&page_size=200`)
-  console.log(data)
-  return data
-    .catch(error => console.log.error('Error:', error));
-};
