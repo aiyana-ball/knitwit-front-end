@@ -4,10 +4,11 @@ import SearchBar from './SearchBar';
 import './Search.css';
 
 function Search() {
-  const [searchResults, setSearchResults] = useState(null);
+  const [searchResults, setSearchResults] = useState(JSON.parse(localStorage.getItem('searchResults')) || null);
 
   const handleSearch = (results) => {
     setSearchResults(results);
+    localStorage.setItem('searchResults', JSON.stringify(results))
   };
 
   let combinedResults = [];
