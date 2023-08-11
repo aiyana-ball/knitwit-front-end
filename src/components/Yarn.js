@@ -19,10 +19,6 @@ function YarnPage() {
       <div className="search-results">
         {yarns.map((yarn, index) => (
             <Favorites key={index} item={yarn}/>
-          // <div key={index} className="search-result">
-          //   <img src={yarn.first_photo.small_url} alt={yarn.name} />
-          //   <h2>{yarn.name}</h2>
-          // </div>
         ))}
       </div>
     </div>
