@@ -19,10 +19,6 @@ function Patterns() {
       <div className="search-results">
         {patterns.map((pattern, index) => (
             <Favorites key={index} item={pattern}/>
-          // <div key={index} className="search-result">
-          //   <img src={yarn.first_photo.small_url} alt={yarn.name} />
-          //   <h2>{yarn.name}</h2>
-          // </div>
         ))}
       </div>
     </div>
