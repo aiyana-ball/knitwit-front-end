@@ -2,18 +2,34 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  max-height: 600px;
+  max-height: 700px;
   overflow-y: auto;
 
 }
 
 .search-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #c83838;
   padding: 10px;
-  flex: 1 0 15%;
+  flex: 1 0 10%;
+  font-size: xx-small;
+  text-align: center;
+  height: 150px;
+  position: relative;
 }
 
 .search-result img {
+  border: 1px solid;
   width: 100%;
+  height: 100px;
+  object-fit: cover;
+}
+
+.heart-button {
+  position: absolute;
+  top: 70px;
+  left: 85px;
 }
