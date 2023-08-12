@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { makeRavelryRequest } from './ravelry';
+import { useNavigate } from 'react-router-dom';
 import './SearchResults.css';
 
 function SearchBar({ onSearch }) {
   const [query, setQuery] = useState('');
+  const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     setQuery(event.target.value);
@@ -23,6 +25,7 @@ function SearchBar({ onSearch }) {
       };
       console.log(data);
       onSearch(data);
+      navigate('/search');
     })
     .catch(error => console.error('Error:', error));
   };
@@ -31,7 +34,7 @@ function SearchBar({ onSearch }) {
     <form method="get" action="" onSubmit={handleSubmit}>
       <div className="tb">
         <div className="td">
-          <input type="text" placeholder="Search" required value={query} onChange={handleInputChange} />
+          <input type="text" placeholder="Search for anything here..." required value={query} onChange={handleInputChange} />
         </div>
         <div className="td" id="s-cover">
           <button type="submit">
