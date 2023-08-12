@@ -3,7 +3,7 @@
   justify-content: center;
   height: 100vh;
   grid-template-columns: 200px 1fr;
-  grid-template-rows: 65px 1fr 65px;
+  grid-template-rows: 100px 1fr 65px;
   grid-template-areas: 
     "menu header"
     "menu main"
@@ -36,8 +36,13 @@ a {
   grid-area: header;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   background-color: #FF894F;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
 }
 
 .main {
@@ -48,4 +53,10 @@ a {
 .footer {
   grid-area: footer;
   background-color: #f9a6e6;
+}
+
+.welcome-knitwit {
+  width: 350px;
+  /* align-items: right; */
+  margin: 0 50px;
 }
