@@ -47,42 +47,46 @@ function Profile() {
 
   return (
     <div>
-      <h1>{user && <img src={photoURL} alt="Profile" />}</h1>
       {user ? (
-        <div>
-          <p>Welcome, {user.displayName}!</p>
-          <button onClick={signOut}>Sign out</button>
-          <h2>Favorites</h2>
-          <div className="search-results">
-            {/* {console.log(favorites)} */}
-          {favorites.map((favorite, index) => {
-            // console.log('single item from favorites')
-            // console.log(favorite);
-            return (
-              <div key={index} className="search-result">
-                {(favorite.yarn && favorite.yarn.photos && favorite.yarn.photos[0]) ? (
-                  <>
-                    <img src={favorite.yarn.photos[0].small_url} alt={favorite.yarn.name} />
-                    <h2>{favorite.yarn.name}</h2>
-                  </>
-                ) : favorite.pattern && favorite.pattern.photos && favorite.pattern.photos[0] ? (
-                  <>
-                    <img src={favorite.pattern.photos[0].small_url} alt={favorite.pattern.name} />
-                    <h2>{favorite.pattern.name}</h2>
-                  </>
-                ) : (
-                  <p>Loading...</p>
-                )}
-              </div>
-            );
-          })}
+        <div className="user-info">
+          <h1><img src={photoURL} alt="Profile" /></h1>
+          <div>
+            <p>Welcome, {user.displayName}!</p>
+            <button onClick={signOut}>Sign out</button>
           </div>
         </div>
       ) : (
         <button onClick={signIn}>Sign in with Google</button>
       )}
-    </div>
+      {user && (
+        <div>
+          <h2>Here are your favorites!</h2>
+          <div className="search-results">
+            {favorites.map((favorite, index) => {
+              return (
+                <div key={index} className="search-result">
+                  {(favorite.yarn && favorite.yarn.photos && favorite.yarn.photos[0]) ? (
+                    <>
+                      <img src={favorite.yarn.photos[0].small_url} alt={favorite.yarn.name} />
+                      <h2>{favorite.yarn.name}</h2>
+                    </>
+                  ) : favorite.pattern && favorite.pattern.photos && favorite.pattern.photos[0] ? (
+                    <>
+                      <img src={favorite.pattern.photos[0].small_url} alt={favorite.pattern.name} />
+                      <h2>{favorite.pattern.name}</h2>
+                    </>
+                  ) : (
+                    <p>Loading...</p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+      </div>
   );
-};
+}
+
 
 export default Profile;
