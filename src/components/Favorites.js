@@ -14,7 +14,7 @@ function Favorites({ item }) {
       const userRef = doc(db, 'account', user.uid);
       // console.log("user exists")
       const docSnap = await getDoc(userRef);
-      const favoriteItem = { id: item.id, type: item.type }; // the item type is in the 'type' field of the 'item' object
+      const favoriteItem = { id: item.id, type: item.type };
 
       if (docSnap.exists()) {
         // console.log("docSnap exists")
@@ -41,9 +41,9 @@ function Favorites({ item }) {
 
   return (
       <div className="search-result">
-        <img src={item.first_photo.small_url} alt={item.name}/>
+        {item.first_photo && <img src={item.first_photo.small_url} alt={item.name}/>}
         <h2>{item.name}</h2>
-        {user && <button onClick={toggleFavorite}>❤️</button>}
+        {user && <button className="heart-button" onClick={toggleFavorite}>❤️</button>}
       </div>
   );
 }
