@@ -14,8 +14,7 @@ function YarnPage() {
 
   return (
     <div>
-      <h1>Yarn Page</h1>
-      <p>Welcome to the yarn page!</p>
+      <h1>~Yarn~</h1>
       <div className="search-results">
         {yarns.map((yarn, index) => (
             <Favorites key={index} item={yarn}/>
