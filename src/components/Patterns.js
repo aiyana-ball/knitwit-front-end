@@ -14,8 +14,7 @@ function Patterns() {
 
   return (
     <div>
-      <h1>Patterns Page</h1>
-      <p>Welcome to the patterns page!</p>
+      <h1>~Patterns~</h1>
       <div className="search-results">
         {patterns.map((pattern, index) => (
             <Favorites key={index} item={pattern}/>
@@ -23,5 +22,6 @@ function Patterns() {
       </div>
     </div>
   );
-        }
+}
+
 export default Patterns;
