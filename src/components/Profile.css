@@ -26,3 +26,13 @@
   border-radius: 30%;
   margin: 10px;
 }
+
+.sign-in-section {
+  display: flex;
+  height: 600px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: xx-large;
+}
