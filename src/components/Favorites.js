@@ -58,14 +58,16 @@ function Favorites({ item }) {
 
   return (
     <div className="search-result">
-      <img src={item.first_photo ? item.first_photo.small_url : '/knitwit-logo.png'} alt={item.name}/>
-      <h2>
-        {item && item.download_location && item.download_location.url 
-          ? <a href={item.download_location.url}>{item.name}</a> 
-          : item.yarn_company && item.yarn_company.url 
-            ? <a href={item.yarn_company.url}>{item.name}</a> 
-            : item.name}
-      </h2>
+      <img src={item.first_photo ? item.first_photo.small_url : '/missing-image_480.png'} alt={item.name}/>
+      <div className="search-result-text">
+        <h2>
+          {item && item.download_location && item.download_location.url 
+            ? <a href={item.download_location.url}>{item.name}</a> 
+            : item.yarn_company && item.yarn_company.url 
+              ? <a href={item.yarn_company.url}>{item.name}</a> 
+              : item.name}
+        </h2>
+      </div>
       {user && <button className="heart-button" onClick={toggleFavorite}>{isFavorited ? '❤️' : '🤍'}</button>}
     </div>
   );
