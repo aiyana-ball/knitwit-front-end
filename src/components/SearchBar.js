@@ -15,8 +15,8 @@ function SearchBar({ onSearch }) {
     event.preventDefault();
     console.log('searching yarns and patterns')
     Promise.all([
-      makeRavelryRequest(`yarns/search.json?query=${query}&page_size=200`),
-      makeRavelryRequest(`patterns/search.json?query=${query}&page_size=200`)
+      makeRavelryRequest(`yarns/search.json?query=${query}&page_size=300`),
+      makeRavelryRequest(`patterns/search.json?query=${query}&page_size=300`)
     ])
     .then(([yarnsData, patternsData]) => {
       const data = {
