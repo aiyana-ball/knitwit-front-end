@@ -3,6 +3,7 @@ import UserContext from '../UserContext';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import Favorites from './Favorites';
 import { makeRavelryRequest } from './ravelry';
+import './Profile.css'
 
 function Profile() {
   const { user, signIn, signOut } = useContext(UserContext);
@@ -14,11 +15,21 @@ function Profile() {
       let itemData;
       if (type === 'pattern') {
         itemData = await makeRavelryRequest(`patterns/${id}.json`);
+        itemData.pattern.first_photo = {};
+        if (itemData.pattern && itemData.pattern.photos && itemData.pattern.photos[0] && itemData.pattern.photos[0].small_url) {
+          itemData.pattern.first_photo.small_url = itemData.pattern.photos[0].small_url
+        }
+        itemData.pattern.type = 'pattern'
+        return itemData.pattern;
       } else if (type === 'yarn') {
         itemData = await makeRavelryRequest(`yarns/${id}.json`); 
+        itemData.yarn.first_photo = {};
+        if (itemData.yarn && itemData.yarn.photos && itemData.yarn.photos[0] && itemData.yarn.photos[0].small_url) {
+          itemData.yarn.first_photo.small_url = itemData.yarn.photos[0].small_url
+        }
+        itemData.yarn.type = 'yarn'
+        return itemData.yarn;
       }
-      // console.log(itemData);
-      return itemData;
     } catch (error) {
       console.error("Item not found:", id);
       return null;
@@ -33,11 +44,9 @@ function Profile() {
         if (docSnap.exists()) {
           const userData = docSnap.data();
           const favoriteItems = userData.favorites.map(favorite => {
-            // console.log(favorite.id, favorite.type);
             return fetchItemDetails(favorite.id, favorite.type);
           });
           Promise.all(favoriteItems).then(favoriteItems => {
-            // console.log(favoriteItems);
             setFavorites(favoriteItems);
           });
         }
@@ -49,44 +58,29 @@ function Profile() {
     <div>
       {user ? (
         <div className="user-info">
-          <h1><img src={photoURL} alt="Profile" /></h1>
+          <h1><img className="profile-pic" src={photoURL} alt="Profile" /></h1>
           <div>
             <p>Welcome, {user.displayName}!</p>
-            <button onClick={signOut}>Sign out</button>
+            <button className="sign-button" onClick={signOut}>Sign out</button>
           </div>
+          <h2 className="title"> ✨My Favorites✨ </h2>
         </div>
       ) : (
-        <button onClick={signIn}>Sign in with Google</button>
+        <button className="sign-button" onClick={signIn}>Sign in with Google</button>
       )}
-      {user && (
-        <div>
-          <h2>Here are your favorites!</h2>
-          <div className="search-results">
-            {favorites.map((favorite, index) => {
-              return (
-                <div key={index} className="search-result">
-                  {(favorite.yarn && favorite.yarn.photos && favorite.yarn.photos[0]) ? (
-                    <>
-                      <img src={favorite.yarn.photos[0].small_url} alt={favorite.yarn.name} />
-                      <h2>{favorite.yarn.name}</h2>
-                    </>
-                  ) : favorite.pattern && favorite.pattern.photos && favorite.pattern.photos[0] ? (
-                    <>
-                      <img src={favorite.pattern.photos[0].small_url} alt={favorite.pattern.name} />
-                      <h2>{favorite.pattern.name}</h2>
-                    </>
-                  ) : (
-                    <p>Loading...</p>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+    {user && (
+      <div className="search-results">
+        {favorites.length > 0 ? (
+          favorites.map((favorite, index) => {
+            return <Favorites key={index} item={favorite}/>
+          })
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
-  );
+    )}
+  </div>
+);
 }
-
 
 export default Profile;
