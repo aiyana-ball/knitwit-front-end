@@ -42,8 +42,8 @@ function App() {
       <Router>
         <div className="container">
           <div className="header">
-          <h1 className='welcome-knitwit'>Welcome to KnitWit!</h1>
-            <div id="cover">
+          <h1 className='welcome-knitwit'>Welcome to KnitWit, your planner for all things knitting!</h1>
+            <div id="cover" className="cover">
               <SearchBar onSearch={handleSearch} />
             </div>
           </div>
@@ -65,7 +65,9 @@ function App() {
               <Route path="/yarn" element={<YarnPage />} />
             </Routes>
           </div>
-          <div className="footer">Footer</div>
+          <div className="footer">
+            <p>&copy; 2023 Aiyana Ball</p>
+          </div>
         </div>
       </Router>
     </UserContext.Provider>
