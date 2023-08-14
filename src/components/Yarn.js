@@ -5,20 +5,38 @@ import Favorites from './Favorites';
 
 function YarnPage() {
   const [yarns, setYarns] = useState([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    getAllYarns('yarns/search.json')
-      .then(data => setYarns(data.yarns))
-      .catch(error => console.error('Error:', error));
+    loadInitialYarns();
   }, []);
+
+    const loadInitialYarns = () => {
+    getAllYarns(1)
+      .then(data => {
+        setYarns(data.yarns);
+        setPage(2);
+      })
+      .catch(error => console.error('Error:', error));
+  }
+
+  const loadMoreYarns = () => {
+    getAllYarns(page)
+      .then(data => {
+        setYarns(prevYarns => [...prevYarns, ...data.yarns]);
+        setPage(prevPage => prevPage + 1);
+      })
+      .catch(error => console.error('Error:', error));
+  }
 
   return (
     <div>
-      <h1>~Yarn~</h1>
+      <h1 className="item-pages">~Yarn~</h1>
       <div className="search-results">
         {yarns.map((yarn, index) => (
             <Favorites key={index} item={yarn}/>
         ))}
+        <button className="load-more-button" onClick={loadMoreYarns}>Load More</button>
       </div>
     </div>
   );
