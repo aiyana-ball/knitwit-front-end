@@ -42,7 +42,7 @@ function App() {
       <Router>
         <div className="container">
           <div className="header">
-          <h1 className='welcome-knitwit'>Welcome to KnitWit, your planner for all things knitting!</h1>
+          <h1 className='welcome-knitwit'>Your planner for all things knitting!</h1>
             <div id="cover" className="cover">
               <SearchBar onSearch={handleSearch} />
             </div>
