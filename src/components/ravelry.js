@@ -15,19 +15,20 @@ export function makeRavelryRequest(endpoint) {
     });
   }
 
-  export function getAllPatterns() {
-    return makeRavelryRequest(`patterns/search.json?&page_size=50`)
+  export function getAllPatterns(page) {
+    return makeRavelryRequest(`patterns/search.json?&page=${page}&page_size=50`)
       .then(data => {
         data.patterns.forEach(pattern => {
           pattern.type = 'pattern';
         });
+        console.log(data);
         return data;
       })
       .catch(error => console.error('Error:', error));
   }
   
-  export function getAllYarns() {
-    return makeRavelryRequest(`yarns/search.json?&page_size=50`)
+  export function getAllYarns(page) {
+    return makeRavelryRequest(`yarns/search.json?&page=${page}&page_size=50`)
       .then(data => {
         data.yarns.forEach(yarn => {
           yarn.type = 'yarn';
